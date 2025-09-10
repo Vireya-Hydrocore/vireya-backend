@@ -15,7 +15,7 @@ public class Conexao {
             Class.forName("org.postgresql.Driver"); //Não obrigatório
 
             conn = DriverManager.getConnection(
-                    dotenv.get("DB_URL_LOCAL"),
+                    Objects.requireNonNull(dotenv.get("DB_URL_LOCAL")),
                     dotenv.get("DB_USERNAME_LOCAL"),
                     dotenv.get("DB_PASSWORD_LOCAL")
             );
