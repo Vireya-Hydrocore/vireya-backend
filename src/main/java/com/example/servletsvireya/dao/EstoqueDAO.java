@@ -125,7 +125,7 @@ public class EstoqueDAO { //erik
 
         } catch (SQLException e){
             e.printStackTrace();
-            //Retorna algo?
+            return null; //ta certo?????
         } finally {
             conexao.desconectar();
         }
