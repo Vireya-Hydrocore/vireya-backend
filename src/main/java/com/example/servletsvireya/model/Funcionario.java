@@ -11,7 +11,6 @@ public class Funcionario {
     private int idCargo; // Foreign Key
 
     // Construtores
-
     public Funcionario(){}
     public Funcionario(Funcionario funcionario){
         this.id = id;
@@ -24,7 +23,6 @@ public class Funcionario {
     }
 
     // Getters e Setters
-
     public int getId() { return id; }
     public String getNome() { return this.nome; }
     public String getEmail() { return this.email; }
@@ -34,13 +32,10 @@ public class Funcionario {
     public int getIdCargo() { return this.idCargo; }
 
     public void setId (int id) { this.id = id; }
-
     public void setNome(String nome){ this.nome = nome; }
-
     public void setEmail(String email) { this.email = email; }
     public void setDataAdmissao(LocalDate dataAdmissao){ this.dataAdmissao = dataAdmissao; }
     public void setDataNascimento(LocalDate dataNascimento){ this.dataNascimento = dataNascimento; }
-
     public void setIdETA(int idETA){ this.idETA = idETA; }
     public void setIdCargo(int idFuncionario){ this.idCargo = idCargo; }
 }
