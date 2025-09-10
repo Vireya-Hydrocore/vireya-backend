@@ -1,0 +1,34 @@
+package com.example.servletsvireya.controller.produto;
+
+import com.example.servletsvireya.dao.ProdutoDAO;
+import com.example.servletsvireya.model.Produto;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+@WebServlet(name = "ServletListarProduto", value = "/servlet-listar-produto")
+public class ServletListarProduto extends HttpServlet {
+    ProdutoDAO produtoDAO = new ProdutoDAO();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Criando um objeto que irá receber os dados do produto
+        List<Produto> produtoList = produtoDAO.listarProduto();
+        //Encaminhar lista ao documento index.jsp
+        req.setAttribute("produto", produtoList);
+        RequestDispatcher rd = req.getRequestDispatcher("index.jsp"); //
+        rd.forward(req, resp);
+
+//        //teste
+//        for (int i = 0; i < produtoList.size(); i++) {
+//            System.out.println(produtoList.get(i).getId());
+//            System.out.println(produtoList.get(i).getNome());
+//            System.out.println(produtoList.get(i).getTipo());
+//            System.out.println(produtoList.get(i).getUnidade_medida());
+//            System.out.println(produtoList.get(i).getConcentracao());
+//        }
+    }
+}
