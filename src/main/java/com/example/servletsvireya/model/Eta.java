@@ -5,7 +5,6 @@ public class Eta {
     private String nome;
     private int capacidade;
 
-
     // Contrutores
 
     public Eta(){}
@@ -16,7 +15,6 @@ public class Eta {
     }
 
     // Getters e Setters
-
     public int getId(){ return this.id; }
     public String getNome(){ return this.nome; }
     public int getCapacidade(){ return this.capacidade; }
