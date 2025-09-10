@@ -11,8 +11,8 @@ public class Conexao {
             .load();
 
     //Método para criar conexão com o banco
-    public Connection conectar(){
-        try{
+    public Connection conectar() {
+        try {
             //Informando o drive postgreSQL
             Class.forName("org.postgresql.Driver"); //Não obrigatório
 
@@ -30,9 +30,9 @@ public class Conexao {
     }
 
     //Método para desconectar do banco
-    public void desconectar(){
-        try{
-            if (conn != null && !conn.isClosed()){ //Se a conexão estiver preenchida E aberta
+    public void desconectar() {
+        try {
+            if (conn != null && !conn.isClosed()) { //Se a conexão estiver preenchida E aberta
                 //Fechando a conexão com o banco de dados
                 System.out.println("desconectou!");
                 conn.close();

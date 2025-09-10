@@ -33,11 +33,6 @@ public class Estoque {
 
     }
 
-//    public String toString(){
-//        return "ID: "+id+" Quantidade: "+quantidade+" Data de Validade: "+data_validade+
-//                " Mínimo Possível Estocado: "+min_possiv_estocado+" ID_ETA: "+ id_eta+ " ID_Produto: "+ id_produto;
-//    }
-
     //Getters
     public int getId() {
         return id;
