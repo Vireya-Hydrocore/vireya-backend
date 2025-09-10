@@ -24,12 +24,7 @@ public class Produto {
         this.id = id;
     }
     public Produto(){
-
     }
-
-//    public String toString(){
-//        return "ID: "+id+" Nome: "+nome+" Tipo: "+tipo+" Unidade de Medida: "+unidade_medida+" Concentração: "+concentracao;
-//    }
 
     //Getters
     public int getId() {
