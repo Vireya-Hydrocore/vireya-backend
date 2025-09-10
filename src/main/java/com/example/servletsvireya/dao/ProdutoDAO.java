@@ -132,7 +132,7 @@ public class ProdutoDAO {
 
         } catch (SQLException e){
             e.printStackTrace();
-            //Retornar algo?
+            return null; //Tá certo???
         } finally {
             conexao.desconectar();
         }
