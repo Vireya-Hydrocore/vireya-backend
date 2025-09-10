@@ -18,9 +18,17 @@
 <h2>Selecione a tabela da qual você deseja realizar o CRUD: </h2>
 
 <nav id="botoes">
+    <a href="${pageContext.request.contextPath}/paginasCrud/estoque/index.jsp">Fu;ncionario</a>
+    <br>
+    <a href="">Cargo</a>
+    <br>
     <a href="${pageContext.request.contextPath}/paginasCrud/produto/index.jsp">Produto</a>
-    <p>OII</p>
+    <br>
     <a href="${pageContext.request.contextPath}/paginasCrud/estoque/index.jsp">Estoque</a>
+    <br>
+    <a href="">Eta</a>
+    <br>
+<%--    <a href="${pageContext.request.contextPath}/paginasCrud/estoque/index.jsp">Admin</a>--%>
 </nav>
 
 </body>
