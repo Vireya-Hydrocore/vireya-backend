@@ -6,9 +6,7 @@ import java.util.Objects;
 
 public class Conexao {
     Connection conn;
-    Dotenv dotenv = Dotenv.configure()
-            .directory("C:\\Users\\eriksilva-ieg\\OneDrive - Instituto J&F\\Vireya\\ServletsVireya")
-            .load();
+    Dotenv dotenv = Dotenv.load();
 
     //Método para criar conexão com o banco
     public Connection conectar(){
@@ -17,7 +15,7 @@ public class Conexao {
             Class.forName("org.postgresql.Driver"); //Não obrigatório
 
             conn = DriverManager.getConnection(
-                    Objects.requireNonNull(dotenv.get("DB_URL_LOCAL")),
+                    dotenv.get("DB_URL_LOCAL"),
                     dotenv.get("DB_USERNAME_LOCAL"),
                     dotenv.get("DB_PASSWORD_LOCAL")
             );
