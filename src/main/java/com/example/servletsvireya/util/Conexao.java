@@ -6,7 +6,9 @@ import java.util.Objects;
 
 public class Conexao {
     Connection conn;
-    Dotenv dotenv = Dotenv.load();
+    Dotenv dotenv = Dotenv.configure()
+            .directory("C:\\Users\\eriksilva-ieg\\OneDrive - Instituto J&F\\Vireya\\ServletsVireya")
+            .load();
 
     //Método para criar conexão com o banco
     public Connection conectar(){
