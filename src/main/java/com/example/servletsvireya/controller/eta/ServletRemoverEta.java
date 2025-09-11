@@ -19,7 +19,7 @@ public class ServletRemoverEta extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Pega o id da URL (ex: servlet-remover-eta?id=3)
+        // Pega o id da URL
         int id = Integer.parseInt(req.getParameter("id"));
 
         // Cria um objeto Eta só com o id
