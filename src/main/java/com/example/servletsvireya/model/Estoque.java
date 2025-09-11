@@ -11,7 +11,7 @@ public class Estoque {
     private int id_eta;              //FK. ETA que esse estoque desse produto pertence
     private int id_produto;          //FK. Produto já cadastrado no sistema, mas não no estoque
 
-    //Método Construtores
+    //Métodos Construtores
     public Estoque(int id, int quantidade, LocalDate data_validade, int min_possiv_estocado, int id_eta, int id_produto) {
         this.id = id;
         this.quantidade = quantidade;
@@ -20,17 +20,7 @@ public class Estoque {
         this.id_eta = id_eta;
         this.id_produto = id_produto;
     }
-    public Estoque(int quantidade, LocalDate data_validade, int min_possiv_estocado, int id_eta, int id_produto) {
-        this.quantidade = quantidade;
-        this.data_validade = data_validade;
-        this.min_possiv_estocado = min_possiv_estocado;
-        this.id_eta = id_eta;
-        this.id_produto = id_produto;
-    }
-    public Estoque(int id) {
-    }
     public Estoque(){
-
     }
 
     //Getters
