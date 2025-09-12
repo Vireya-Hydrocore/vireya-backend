@@ -14,15 +14,16 @@ import java.util.List;
 public class ServletListarProduto extends HttpServlet {
     ProdutoDAO produtoDAO = new ProdutoDAO();
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Criando um objeto que irá receber os dados do produto
         List<Produto> produtoList = produtoDAO.listarProduto();
+
         //Encaminhar lista ao documento index.jsp
-        req.setAttribute("produto", produtoList);
-        RequestDispatcher rd = req.getRequestDispatcher("index.jsp"); //
+        req.setAttribute("produtos", produtoList);
+        RequestDispatcher rd = req.getRequestDispatcher("/paginasCrud/produto/listarProduto/index.jsp"); //
         rd.forward(req, resp);
 
-//        //teste
+//        //teste no terminal
 //        for (int i = 0; i < produtoList.size(); i++) {
 //            System.out.println(produtoList.get(i).getId());
 //            System.out.println(produtoList.get(i).getNome());
@@ -32,3 +33,4 @@ public class ServletListarProduto extends HttpServlet {
 //        }
     }
 }
+
