@@ -57,7 +57,7 @@ public class FuncionarioDAO {
                 funcionario.setEmail(rs.getString("email"));
                 funcionario.setDataAdmissao(rs.getDate("data_admissao").toLocalDate()); // .toLocalDate - Pega a data no SQL em tranforma em um LocalDate em Java
                 funcionario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate()); // .toLocalDate - Pega a data no SQL em tranforma em um LocalDate em Java
-                funcionario.setIdETA(rs.getInt("id_eta"));
+                funcionario.setIdEta(rs.getInt("id_eta"));
                 funcionario.setIdCargo(rs.getInt("id_cargo"));
 
                 funcionarios.add(funcionario);
@@ -66,8 +66,7 @@ public class FuncionarioDAO {
             return funcionarios;
 
         } catch (SQLException sqle){
-            return null;
-
+            return new ArrayList<>();
         } finally {
             conexao.desconectar();
         }
