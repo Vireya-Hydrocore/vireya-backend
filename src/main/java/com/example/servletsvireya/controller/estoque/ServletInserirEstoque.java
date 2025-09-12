@@ -29,7 +29,12 @@ public class ServletInserirEstoque extends HttpServlet {
         int idProduto = Integer.parseInt(idProdutoStr);
 
         //Instanciando objeto model Estoque
-        Estoque estoque = new Estoque(quantidade, dataValidade, minPossivEstocado, idEta, idProduto);
+        Estoque estoque = new Estoque();
+        estoque.setQuantidade(quantidade);
+        estoque.setData_validade(dataValidade);
+        estoque.setMin_possiv_estocado(minPossivEstocado);
+        estoque.setId_eta(idEta);
+        estoque.setId_produto(idProduto);
 
         //Inserindo no estoque do banco de dados
         estoqueDAO.inserirEmEstoque(estoque);
