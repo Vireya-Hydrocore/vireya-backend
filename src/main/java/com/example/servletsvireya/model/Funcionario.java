@@ -12,7 +12,7 @@ public class Funcionario {
 
     // Construtores
     public Funcionario(){}
-    public Funcionario(Funcionario funcionario){ //??????
+    public Funcionario(Funcionario funcionario){ //?
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -37,6 +37,6 @@ public class Funcionario {
     public void setDataAdmissao(LocalDate dataAdmissao){ this.dataAdmissao = dataAdmissao; }
     public void setDataNascimento(LocalDate dataNascimento){ this.dataNascimento = dataNascimento; }
     public void setIdEta(int idETA){ this.idETA = idETA; }
-    public void setIdCargo(int idFuncionario){ this.idCargo = idCargo; } //???
+    public void setIdCargo(int idFuncionario){ this.idCargo = idCargo; } //?
 
 }
