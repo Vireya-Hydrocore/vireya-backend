@@ -3,7 +3,7 @@ package com.example.servletsvireya.model;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class Estoque {
+public class Estoque {  //alteração teste
     private int id;                  // Identificador único
     private int quantidade;          // Quantidade estocada de tal produto
     private LocalDate data_validade; // Data de validade de tal produto
