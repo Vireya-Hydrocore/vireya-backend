@@ -37,6 +37,6 @@ public class Funcionario {
     public void setDataAdmissao(LocalDate dataAdmissao){ this.dataAdmissao = dataAdmissao; }
     public void setDataNascimento(LocalDate dataNascimento){ this.dataNascimento = dataNascimento; }
     public void setIdEta(int idETA){ this.idETA = idETA; }
-    public void setIdCargo(int idFuncionario){ this.idCargo = idCargo; } //?
+    public void setIdCargo(int idCargo){ this.idCargo = idCargo; } //?
 
 }
