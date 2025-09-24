@@ -11,6 +11,27 @@ import java.io.IOException;
 @WebServlet(name = "ServletAlterarProduto", value = "/servlet-alterar-produto")
 public class ServletAlterarProduto extends HttpServlet {
     ProdutoDAO produtoDAO = new ProdutoDAO();
+
+    // GET -> mostra o formulário preenchido
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        int id = Integer.parseInt(req.getParameter("id"));
+
+        Produto produto = produtoDAO.buscarPorId(id);
+
+        if (produto != null) {
+            req.setAttribute("produto", produto); //setta o atributo la no jsp
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/paginasCrud/produto/alterarProduto/index.jsp");
+            dispatcher.forward(req, resp);
+        } else {
+            resp.getWriter().println("Produto não encontrado.");
+        }
+    }
+
+
+    // POST -> pega as informações depois de mudar
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Pegar os valores
@@ -21,14 +42,26 @@ public class ServletAlterarProduto extends HttpServlet {
         int id = Integer.parseInt(idStr);
         double concentracao = Double.parseDouble(concentracaoStr);
 
-        //Instanciando objeto da classe model Produto
-        Produto produto = new Produto();
-        produto.setId(id);
-        produto.setConcentracao(concentracao);
+        //Instanciando objetos da classe model Produto
+        Produto original = produtoDAO.buscarPorId(id);
+
+        Produto modificado = new Produto();
+        modificado.setId(id);
+        modificado.setNome(req.getParameter("nome"));
+        modificado.setTipo(req.getParameter("tipo"));
+        modificado.setUnidadeMedida(req.getParameter("unidMedida"));
+        modificado.setConcentracao(concentracao);
+
 
         //Alterando produto do sistema
-        produtoDAO.alterarConcentracao(produto);
+        int resultado = produtoDAO.alterar(original, modificado);
 
-        //não precisa responder nada
+        if (resultado == 1){
+            //volta pra lista
+        } else if (resultado == 0){
+            //nada foi alterado
+        } else{
+            //tela de erro
+        }
     }
 }
