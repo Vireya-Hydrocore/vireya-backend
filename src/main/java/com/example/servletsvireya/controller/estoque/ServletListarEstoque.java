@@ -14,9 +14,10 @@ import java.util.List;
 public class ServletListarEstoque extends HttpServlet {
     EstoqueDAO estoqueDAO = new EstoqueDAO();
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Criando um objeto que irá receber os dados do produto
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Criando um objeto que irá receber os dados do estoque
         List<Estoque> estoqueList = estoqueDAO.listarEstoque();
+
         //Encaminhar lista ao documento index.jsp
         req.setAttribute("estoque", estoqueList);
         RequestDispatcher rd = req.getRequestDispatcher("index.jsp"); //

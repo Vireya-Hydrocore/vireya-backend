@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @WebServlet(name = "ServletInserirEstoque", value = "/servlet-inserir-estoque")
 public class ServletInserirEstoque extends HttpServlet {
     EstoqueDAO estoqueDAO = new EstoqueDAO();
+    Estoque estoque = new Estoque();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Pegando valores dos inputs
@@ -29,7 +30,6 @@ public class ServletInserirEstoque extends HttpServlet {
         int idProduto = Integer.parseInt(idProdutoStr);
 
         //Instanciando objeto model Estoque
-        Estoque estoque = new Estoque();
         estoque.setQuantidade(quantidade);
         estoque.setData_validade(dataValidade);
         estoque.setMin_possiv_estocado(minPossivEstocado);
@@ -37,7 +37,7 @@ public class ServletInserirEstoque extends HttpServlet {
         estoque.setId_produto(idProduto);
 
         //Inserindo no estoque do banco de dados
-        estoqueDAO.inserirEmEstoque(estoque);
+        estoqueDAO.inserirEstoque(estoque);
 
         //Não precisa responder nada
     }
