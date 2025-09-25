@@ -7,50 +7,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProdutoDAO {
     private final Conexao conexao = new Conexao(); //Só para os método de conectar() e desconectar()
 
-
     //Método para cadastrar um produto no sistema
-    public int cadastrarProduto(Produto produto){ //Cadastra no sistema mas NÃO insere no estoque
-        try{
-            Connection conn = conexao.conectar(); //Conecta ao banco de dados
-            //Prepara a declaração SQL para inserir o produto
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO produto(nome, tipo, unidade_medida, concentracao) values(?, ?, ?, ?)");
+    public int cadastrarProduto(Produto produto) { //Cadastra no sistema mas NÃO insere no estoque
+        Connection conn = conexao.conectar(); //Conecta ao banco de dados
+        //Prepara a String do comando SQL
+        String comando = "INSERT INTO produto(nome, tipo, unidade_medida, " +
+                "concentracao) values(?, ?, ?, ?)";
 
+        try (PreparedStatement pstmt = conn.prepareStatement(comando)) {
             //Setando valores usando a classe model
             pstmt.setString(1, produto.getNome());
             pstmt.setString(2, produto.getTipo());
-            pstmt.setString(3, produto.getUnidade_medida());
+            pstmt.setString(3, produto.getUnidadeMedida());
             pstmt.setDouble(4, produto.getConcentracao());
 
-            if(pstmt.executeUpdate() > 0){ //Se modificar alguma linha
+            if (pstmt.executeUpdate() > 0) { //Se modificar alguma linha
                 return 1; //Inserção bem sucedida
-            } else{
+            } else {
                 return 0; //Não foi possível inserir
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1; //Para indicar erro no banco de dados
-        }
-        finally{
+        } finally {
             conexao.desconectar(); //Por fim, mesmo que passe pela exceção, desconecta
         }
     }
 
-    //Método para remover um produto (pelo ID)
+    //Método para remover um produto
     public int removerProduto(Produto produto) {
-        try {
-            Connection conn = conexao.conectar();
+        Connection conn = conexao.conectar(); //Cria conexão com o banco
+        String comando = "DELETE FROM produto WHERE id = ?";
 
-            //Aqui precisa verificar se o id do produto existe (??)
-
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM produto WHERE id = ?");
+        try (PreparedStatement pstmt = conn.prepareStatement(comando)) {
             pstmt.setInt(1, produto.getId());
+
+            //Aqui precisa verificar se o id do produto existe !!!
 
             if (pstmt.executeUpdate() > 0) {
                 return 1;
@@ -58,28 +57,28 @@ public class ProdutoDAO {
                 return 0;
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
-            return -1;
+            sqle.printStackTrace(); //remover no final do projetoooooooo
+            return -1; //Para indicar erro no banco de dados
         } finally {
             conexao.desconectar();
         }
     }
 
-    //Métodos para alterar concentração e unidade de medida ////////Pode mudar né?
-    public int alterarConcentracao(Produto produto){ //Altera a concentração (por ID)
-        try{
+    //Métodos para alterar concentração ////////Pode mudar né?
+    public int alterarConcentracao(Produto produto) { //Altera a concentração (por ID)
+        try {
             Connection conn = conexao.conectar();
 
             PreparedStatement pstmt = conn.prepareStatement("UPDATE produto SET concentracao = ? WHERE id = ?");
             pstmt.setDouble(1, produto.getConcentracao());
             pstmt.setInt(2, produto.getId());
 
-            if (pstmt.executeUpdate() > 0){
+            if (pstmt.executeUpdate() > 0) {
                 return 1;
-            } else{
+            } else {
                 return 0;
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         } finally {
@@ -88,20 +87,60 @@ public class ProdutoDAO {
     }
 
     //Altera unidade de medida do produto
-    public int alterarUnidadeMedida(Produto produto){ //Altera a concentração (por
-        try{
-            Connection conn = conexao.conectar();
+    public int alterar(Produto original, Produto modificado) {
+        List<Object> inputs = new ArrayList<>();
 
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE produto SET unidade_medida = ? WHERE id = ?");
-            pstmt.setString(1, produto.getUnidade_medida());
-            pstmt.setInt(2, produto.getId());
+        //Criando uma String construtora
+        StringBuilder comando = new StringBuilder("UPDATE produto SET ");
 
-            if (pstmt.executeUpdate() > 0){
-                return 1;
-            } else{
+        //Pegando os valores do model do talvez modificado
+        int id = modificado.getId();
+        String nome = modificado.getNome();
+        String tipo = modificado.getTipo();
+        String unidadeMedida = modificado.getUnidadeMedida();
+        double concentracao = modificado.getConcentracao();
+
+        //Checando se foi modificado ou não, em relação ao original
+        if (!nome.equals(original.getNome())) {
+            inputs.add(nome); //Adiciona o valor que foi modificado
+            comando.append("nome = ?, "); //Concatena a string do comandoSQL
+        }
+        if (!tipo.equals(original.getTipo())) { //Não pode ser elseif
+            inputs.add(tipo);
+            comando.append("tipo = ?, ");
+        }
+        if (!unidadeMedida.equals(original.getUnidadeMedida())) {
+            inputs.add(unidadeMedida);
+            comando.append("unidade_medida = ?, ");
+        }
+        if (concentracao != original.getConcentracao()) {
+            inputs.add(comando);
+            comando.append("concentracao = ?, ");
+        }
+
+        comando.setLength(comando.length() - 2); //Remove a ultima virgula
+
+        comando.append(" WHERE id = ?");
+        inputs.add(id);
+
+        if (inputs.size() <= 1) { //Não mudou nada
+            return 0;
+        }
+
+        Connection conn = conexao.conectar(); //Criando conexão com o banco
+        try (PreparedStatement pstmt = conn.prepareStatement(String.valueOf(comando))) {
+
+            //Settando valores
+            for (int i = 0; i < inputs.size(); i++) {
+                pstmt.setObject(i + 1, inputs.get(i));
+            }
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1; //Se modificou alguma linha
+            } else {
                 return 0;
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         } finally {
@@ -109,17 +148,18 @@ public class ProdutoDAO {
         }
     }
 
-    //Método para listar produtos ////////////////// Usar list (não sei como)
-    public List<Produto> listarProduto(){
+    //Método para listar produtos
+    public List<Produto> listarProduto() {
+        ResultSet rset = null; //Consulta da tabela
         List<Produto> produtos = new ArrayList<>();
-        try{
-            ResultSet rset = null; //Consulta da tabela
-            Connection conn = conexao.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM produto ORDER BY id");
+
+        Connection conn = conexao.conectar();
+        String comando = "SELECT * FROM produto ORDER BY id";
+        try (PreparedStatement pstmt = conn.prepareStatement(comando)) {
             rset = pstmt.executeQuery(); //Executa a consulta com Query
 
             //Armazenar os valores em um List<>
-            while (rset.next()){
+            while (rset.next()) {
                 int id = rset.getInt(1); //Pega a primeira coluna do select
                 String nome = rset.getString(2);
                 String tipo = rset.getString(3);
@@ -129,13 +169,51 @@ public class ProdutoDAO {
                 //Populando o List
                 produtos.add(new Produto(id, nome, tipo, unidadeMedida, concentracao));
             }
+            return produtos; //Retorna o List com os resultados
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return new ArrayList<>(); //Retorna lista vazia
         } finally {
             conexao.desconectar();
         }
-        return produtos; //Retorna o List com os resultados
+    }
+
+
+    //Buscar pelo ID
+    public Produto buscarPorId(int idProcurado) { //Seria um filtro né???
+        ResultSet rset = null; //Consulta da tabela
+        Produto produto = null;
+
+        Connection conn = conexao.conectar();
+        //Prepara a consulta SQL para selecionar os produtos por ordem de ID
+        String comando = "SELECT * FROM estoque WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(comando)) {
+            pstmt.setInt(1, idProcurado);
+            rset = pstmt.executeQuery(); //Executa a consulta com Query
+
+            if (rset == null) {
+                return null; //Não tem registro com esse id
+            }
+
+            //Armazenar os valores em uma variável tipo produto
+            //variavel pois nao existe id repetido
+            if (rset.next()) {
+                int id = rset.getInt(1); //Pega a primeira coluna do select
+                String nome = rset.getString(2);
+                String tipo = rset.getString(3);
+                String unidade_medida = rset.getString(4);
+                double concentracao = rset.getDouble(5);
+
+                produto = new Produto(id, nome, tipo, unidade_medida, concentracao);
+            }
+            return produto; //Retorna contendo os produtos
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; //Vazio
+        } finally {
+            conexao.desconectar();
+        }
     }
 }
