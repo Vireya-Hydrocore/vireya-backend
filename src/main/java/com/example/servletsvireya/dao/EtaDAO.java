@@ -3,10 +3,7 @@ package com.example.servletsvireya.dao;
 import com.example.servletsvireya.model.Eta;
 import com.example.servletsvireya.util.Conexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +21,7 @@ public class EtaDAO {
             pstmt.setInt(1, eta.getId());
             pstmt.setString(2, eta.getNome());
             pstmt.setInt(3, eta.getCapacidade());
+            pstmt.setString(4, eta.getTelefone());
 
             return pstmt.executeUpdate(); //
         }
@@ -36,6 +34,7 @@ public class EtaDAO {
         }
     }
 
+    // Método buscarETA()
 
     // Método listar as ETAs
     public List<Eta> listarETA(){
@@ -52,6 +51,7 @@ public class EtaDAO {
                 eta.setId(rs.getInt("id"));
                 eta.setNome(rs.getString("nome"));
                 eta.setCapacidade(rs.getInt("capacidade"));
+                eta.setTelefone(rs.getString("telefone"));
 
                 //Populando o list
                 etas.add(eta);
@@ -67,6 +67,38 @@ public class EtaDAO {
     }
 
 
+
+    // Método buscarTodasEtas()
+
+//    public List<Eta> buscarTodasEtas() {
+//
+//        List<Eta> etas = new ArrayList<>();
+//        conexao.conectar();
+//
+//        try (PreparedStatement pstmt = conexao.prepareStatement("SELECT * FROM ETA")) {
+//
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                Eta eta = new Eta();
+//                eta.setId(rs.getInt("id"));
+//                eta.setNome(rs.getString("nome"));
+//                eta.setCapacidade(rs.getInt("capacidade"));
+//                eta.setTelefone(rs.getString("telefone"));
+//
+//                etas.add(eta);
+//            }
+//
+//            return etas;
+//        }
+//        catch (SQLException e) {
+//            return null;
+//        }
+//        finally {
+//            conexao.desconectar();
+//        }
+//    }
+
     // Método alterarETA()
     public int alterarETA(Eta eta){
         Connection conn = conexao.conectar();
@@ -74,7 +106,8 @@ public class EtaDAO {
 
             pstmt.setString(1, eta.getNome());
             pstmt.setInt(2, eta.getCapacidade());
-            pstmt.setInt(3, eta.getId());
+            pstmt.setString(3, eta.getTelefone());
+            pstmt.setInt(4, eta.getId());
 
             return pstmt.executeUpdate();
         }
