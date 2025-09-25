@@ -17,7 +17,7 @@ public class ServletRemoverFuncionario extends HttpServlet {
     private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int id = Integer.parseInt(req.getParameter("id"));
 
