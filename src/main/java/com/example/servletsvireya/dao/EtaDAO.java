@@ -16,18 +16,19 @@ public class EtaDAO {
     public EtaDAO(){ this.conexao = new Conexao(); }
 
     // Método inserirEta()
-
     public int inserirETA(Eta eta){
         Connection conn = conexao.conectar();
-        try( PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ETA (id, nome, capacidade) VALUES (?, ?, ?)")){
-
+        String comando = "INSERT INTO ETA (id, nome, capacidade) " +
+                "VALUES (?, ?, ?)";
+        try(PreparedStatement pstmt = conn.prepareStatement(comando)){
             pstmt.setInt(1, eta.getId());
             pstmt.setString(2, eta.getNome());
             pstmt.setInt(3, eta.getCapacidade());
 
-            return pstmt.executeUpdate();
+            return pstmt.executeUpdate(); //
         }
         catch (SQLException sqle){
+            sqle.printStackTrace();
             return -1;
         }
         finally {
@@ -35,37 +36,38 @@ public class EtaDAO {
         }
     }
 
-    // Método buscarETA()
 
-    public List<Eta> buscarETA(Eta eta){
+    // Método listar as ETAs
+    public List<Eta> listarETA(){
+        ResultSet rs = null;
         List<Eta> etas = new ArrayList<>();
 
         Connection conn = conexao.conectar();
-
-        try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ETA WHERE id = ?")){
-
-            pstmt.setInt(1, eta.getId());
-            ResultSet rs = pstmt.executeQuery();
+        String comando = "INSERT INTO ETA (id, nome, capacidade) VALUES (?, ?, ?)";
+        try(PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ETA ORDER BY id")){
+            rs = pstmt.executeQuery();
 
             while(rs.next()){
+                Eta eta = new Eta();
                 eta.setId(rs.getInt("id"));
                 eta.setNome(rs.getString("nome"));
                 eta.setCapacidade(rs.getInt("capacidade"));
 
+                //Populando o list
                 etas.add(eta);
             }
             return etas;
-        }
-        catch (SQLException sqle){
-            return null;
-        }
-        finally {
+
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+            return new ArrayList<>();
+        }finally {
             conexao.desconectar();
         }
     }
 
-    // Método alterarETA()
 
+    // Método alterarETA()
     public int alterarETA(Eta eta){
         Connection conn = conexao.conectar();
         try(PreparedStatement pstmt = conn.prepareStatement("UPDATE ETA SET nome = ?, capacidade = ? WHERE id = ?")){
@@ -86,24 +88,28 @@ public class EtaDAO {
 
 
     // Método remover()
-
     public int removerETA(Eta eta){
         Connection conn = conexao.conectar();
         try(PreparedStatement pstmt = conn.prepareStatement("DELETE FROM ETA WHERE id = ?")){
-
             pstmt.setInt(1,eta.getId());
-            return pstmt.executeUpdate();
-        }
-        catch (SQLException sqle){
+
+            //aqui verificar se a eta existe
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1; //Deleção bem sucedida
+            } else {
+                return 0;
+            }
+        } catch (SQLException sqle){
+            sqle.printStackTrace();
             return -1;
-        }
-        finally {
+        } finally {
             conexao.desconectar();
         }
     }
 
-    // Método removerDuplicadas()
 
+    // Método removerDuplicadas()
     public int removerDuplicadas(){
         Connection conn = conexao.conectar();
         try(PreparedStatement pstmt = conn.prepareStatement("DELETE FROM ETA WHERE id NOT IN (SELECT MIN(id) FROM ETA GROUP BY nome, capacidade)")){
