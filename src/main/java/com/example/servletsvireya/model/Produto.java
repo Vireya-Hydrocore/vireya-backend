@@ -7,24 +7,14 @@ public class Produto {
     private double concentracao;   // ex: 12.5, 3.7, etc.
 
     //Construtores
-    public Produto(int id, String nome, String tipo, String unidade_medida, double concentracao) { //tive que criar para adicionar nos metodos de listar
+    public Produto(int id, String nome, String tipo, String unidade_medida, double concentracao) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.unidade_medida = unidade_medida;
         this.concentracao = concentracao;
     }
-    public Produto(String nome, String tipo, String unidade_medida, double concentracao) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.unidade_medida = unidade_medida;
-        this.concentracao = concentracao;
-    }
-    public Produto(int id){
-        this.id = id;
-    }
-    public Produto(){
-    }
+    public Produto(){}
 
     //Getters
     public int getId() {
@@ -39,7 +29,7 @@ public class Produto {
     public double getConcentracao(){
         return concentracao;
     }
-    public String getUnidade_medida(){
+    public String getUnidadeMedida(){
         return unidade_medida;
     }
 
@@ -53,7 +43,7 @@ public class Produto {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public void setUnidade_medida(String unidade_medida) {
+    public void setUnidadeMedida(String unidade_medida) {
         this.unidade_medida = unidade_medida;
     }
     public void setConcentracao(double concentracao) {

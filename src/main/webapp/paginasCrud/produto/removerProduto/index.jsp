@@ -20,7 +20,7 @@
 <body>
 <h1>Remover produtos dos já cadastrados</h1>
 <br><br><br>
-<form action="/servlet-remover-produto" method="post">
+<form action="${pageContext.request.contextPath}/servlet-remover-produto" method="post">
   <label for="id">ID: </label>
   <input type="number" id="id" name="id" placeholder="Digite o ID do produto" required>
   <br><br>

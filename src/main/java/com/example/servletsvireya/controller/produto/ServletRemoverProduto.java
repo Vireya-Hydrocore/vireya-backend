@@ -8,7 +8,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "ServletRemoverProduto", value = "/ServletRemoverProduto")
+@WebServlet(name = "ServletRemoverProduto", value = "/servlet-remover-produto")
 public class ServletRemoverProduto extends HttpServlet {
     ProdutoDAO produtoDAO = new ProdutoDAO();
     @Override
@@ -24,8 +24,12 @@ public class ServletRemoverProduto extends HttpServlet {
         produto.setId(id);
 
         //Removendo produto do sistema
-        produtoDAO.removerProduto(produto);
+        int resultado = produtoDAO.removerProduto(produto);
 
-        //não precisa responder nada
+        if (resultado == 1){
+            //volta pra pagina atualizada da lista
+        } else{
+            //manda pra pagina de erro
+        }
     }
 }

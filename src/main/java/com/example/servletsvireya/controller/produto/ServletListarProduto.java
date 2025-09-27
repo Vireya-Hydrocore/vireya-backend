@@ -7,7 +7,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ServletListarProduto", value = "/servlet-listar-produto")
@@ -22,15 +21,6 @@ public class ServletListarProduto extends HttpServlet {
         req.setAttribute("produtos", produtoList);
         RequestDispatcher rd = req.getRequestDispatcher("/paginasCrud/produto/listarProduto/index.jsp"); //
         rd.forward(req, resp);
-
-//        //teste no terminal
-//        for (int i = 0; i < produtoList.size(); i++) {
-//            System.out.println(produtoList.get(i).getId());
-//            System.out.println(produtoList.get(i).getNome());
-//            System.out.println(produtoList.get(i).getTipo());
-//            System.out.println(produtoList.get(i).getUnidade_medida());
-//            System.out.println(produtoList.get(i).getConcentracao());
-//        }
     }
 }
 

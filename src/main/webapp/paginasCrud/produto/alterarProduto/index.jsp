@@ -23,9 +23,7 @@
   <h2>Digite as informações que você quer mudar:</h2>
   <br>
 
-  <% Produto produto = new Produto(); %>
-
-  <form action="${pageContext.request.contextPath}/servlet-alterar-produto">
+  <form action="${pageContext.request.contextPath}/servlet-alterar-produto" method="post">
     <label for="id">ID: </label>
     <input type="number" id="id" name="id" value="${produto.id}" readonly> <!--usando EL, aciona o metodo .getId(). mas podia ser scriplet tb-->
     <br>
@@ -36,7 +34,7 @@
     <input type="text" id="tipo" name="tipo" value="${produto.tipo}">
     <br>
     <label for="unidMedida">Unidade de Medida: </label>
-    <input type="text" id="unidMedida" name="unidMedida" value="${produto.unidMedida}">
+    <input type="text" id="unidMedida" name="unidMedida" value="${produto.unidade_medida}">
     <br>
     <label for="concentracao">Concentração: </label>
     <input type="number" id="concentracao" name="concentracao" value="${produto.concentracao}">

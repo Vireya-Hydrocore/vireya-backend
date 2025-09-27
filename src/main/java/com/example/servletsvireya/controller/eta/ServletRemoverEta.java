@@ -17,7 +17,7 @@ public class ServletRemoverEta extends HttpServlet {
     private EtaDAO etaDAO = new EtaDAO();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // Pega o id da URL
         int id = Integer.parseInt(req.getParameter("id"));

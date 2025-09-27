@@ -44,7 +44,7 @@
                 <td> <%= lista.get(i).getId() %> </td> <!-- simbolo de igual serve para pegar o valor de uma var. SEM ; -->
                 <td> <%= lista.get(i).getNome() %> </td>
                 <td> <%= lista.get(i).getTipo() %> </td>
-                <td> <%= lista.get(i).getUnidade_medida() %> </td>
+                <td> <%= lista.get(i).getUnidadeMedida() %> </td>
                 <td> <%= lista.get(i).getConcentracao() %> </td>
             </tr>
             <% }

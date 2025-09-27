@@ -18,10 +18,13 @@
 <h1>Selecione a operação desejada: </h1>
 
 <nav class="botoes">
-  <a href="cadastrarProduto/index.jsp">Inserir - C</a> <br>
-  <a href="listarProduto/index.jsp">Listar  - R</a> <br>
-  <a href="">Alterar - U</a> <br>
-  <a href="">Remover - R</a> <br>
+  <a href="cadastrarProduto/index.jsp">Inserir - C</a>
+  <br><br>
+  <a href="listarProduto/index.jsp">Listar  - R</a>
+  <br><br>
+  <a href="alterarProduto/index.jsp">Alterar - U</a>
+  <br><br>
+  <a href="removerProduto/index.jsp">Remover - R</a>
 </nav>
 </body>
 </html>

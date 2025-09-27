@@ -16,27 +16,25 @@ public class ServletCadastrarProduto extends HttpServlet {
         ProdutoDAO produtoDAO = new ProdutoDAO();
 
         //Pegar os valores
-        String nome = req.getParameter("nome").toUpperCase();
+        String nome = req.getParameter("nome").toUpperCase(); // Dá para simplificar !!!
         String tipo = req.getParameter("tipo").toUpperCase();
         String unidMedida = req.getParameter("unidMedida").toUpperCase();
-        String concentracaoStr = req.getParameter("concentracao");
-
-        //Converter a concentração de String para double
-        double concentracao = Double.parseDouble(concentracaoStr);
+        double concentracao = Double.parseDouble(req.getParameter("concentracao")); //Já convertido de String para double
 
         //Instanciando objeto da classe model Produto
-        Produto produto = new Produto(nome, tipo, unidMedida, concentracao);
+        Produto produto = new Produto();
+        produto.setNome(nome);
+        produto.setTipo(tipo);
+        produto.setUnidadeMedida(unidMedida);
+        produto.setConcentracao(concentracao);
 
         //Inserindo no banco de dados
-        produtoDAO.cadastrarProduto(produto);
+        int resultado = produtoDAO.cadastrarProduto(produto);
 
-        resp.setContentType("text/html"); //indicando que a resposta será conteúdo html
-        PrintWriter out = resp.getWriter(); //pra escrever a resposta
-
-        out.println("<html><body>");
-        out.println("<h1>Produto Cadastrado com Sucesso!</h1>");
-        out.println("<br>");
-        out.println("<p>Produto: "+nome+"</p>");
-        out.println("</body></html>");
+        if (resultado == 1){
+            //atualiza a pagina com o novo produto inserido
+        } else{
+            //manda pra pagina de erro
+        }
     }
 }

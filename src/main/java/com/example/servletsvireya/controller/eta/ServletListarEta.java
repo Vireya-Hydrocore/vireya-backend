@@ -24,6 +24,5 @@ public class ServletListarEta extends HttpServlet {
 //        req.setAttribute("listaEtas", listaEtas);
 
         req.getRequestDispatcher("lista-etas.jsp").forward(req, resp);
-
     }
 }

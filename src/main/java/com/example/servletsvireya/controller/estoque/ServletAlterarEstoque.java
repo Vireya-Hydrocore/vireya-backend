@@ -37,8 +37,6 @@ public class ServletAlterarEstoque extends HttpServlet {
         Estoque original = estoqueDAO.buscarPorId(id);
 
         //Alterando produto do sistema
-        estoqueDAO.alterar(original, modificado);
-
-        //não precisa responder nada
+        estoqueDAO.alterarEstoque(original, modificado);
     }
 }
